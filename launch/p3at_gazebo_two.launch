@@ -1,24 +1,62 @@
 <?xml version="1.0"?>
 <launch>
 
-<!-- Gazebo -->
-<arg name="world_name" default="worlds/empty.world"/>
-<include file="$(find gazebo_ros)/launch/empty_world.launch">
-  <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
-  <arg name="paused" value="false"/>
-  <arg name="use_sim_time" value="true"/>
-  <arg name="gui" value="true"/>
-  <arg name="headless" value="false"/>
-  <arg name="debug" value="false"/>
-</include>
+  <arg name="initX0" default="90" />
+  <arg name="initY0" default="20" />
+  <arg name="initZ0" default="1" />
+  <arg name="initYaw0" default="0" />
 
-<group ns="p0">
-  <include file="$(find nre_gazebo)/launch/p3at.launch">
-    <arg name="namespace" value="p0" />
-    <arg name="initX" value="0" />
-    <arg name="initY" value="0" />
-    <arg name="initYaw" value="0" />
+  <arg name="initX1" default="87" />
+  <arg name="initY1" default="17" />
+  <arg name="initZ1" default="1" />
+  <arg name="initYaw1" default="0" />
+
+  <arg name="initX2" default="85" />
+  <arg name="initY2" default="18" />
+  <arg name="initZ2" default="1" />
+  <arg name="initYaw2" default="0" />
+
+  <!--<arg name="world_name" default="worlds/empty.world"/>-->
+  <arg name="world_name" default="$(find nre_gazebo)/worlds/geonav_cavr.world"/>
+
+  <!-- Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
   </include>
-</group>
+  
+  <group ns="p0">
+    <include file="$(find nre_gazebo)/launch/p3at.launch">
+      <arg name="namespace" value="p0" />
+      <arg name="initX" value="$(arg initX0)" />
+      <arg name="initY" value="$(arg initY0)" />
+      <arg name="initZ" value="$(arg initZ0)" />
+      <arg name="initYaw" value="$(arg initYaw0)" />
+    </include>
+  </group>
 
+  <group ns="p1">
+    <include file="$(find nre_gazebo)/launch/p3at.launch">
+      <arg name="namespace" value="p1" />
+      <arg name="initX" value="$(arg initX1)" />
+      <arg name="initY" value="$(arg initY1)" />
+      <arg name="initZ" value="$(arg initZ1)" />
+      <arg name="initYaw" value="$(arg initYaw1)" />
+    </include>
+  </group>
+
+  <group ns="p2">
+    <include file="$(find nre_gazebo)/launch/p3at.launch">
+      <arg name="namespace" value="p2" />
+      <arg name="initX" value="$(arg initX2)" />
+      <arg name="initY" value="$(arg initY2)" />
+      <arg name="initZ" value="$(arg initZ2)" />
+      <arg name="initYaw" value="$(arg initYaw2)" />
+    </include>
+  </group>
+  
 </launch>

@@ -1,37 +1,43 @@
 <?xml version="1.0"?>
 <launch>
 
-<!-- Gazebo -->
-<!--<arg name="world_name" default="worlds/empty.world"/>-->
-<arg name="world_name" default="$(find nre_gazebo)/worlds/geonav.world"/>
-<include file="$(find gazebo_ros)/launch/empty_world.launch">
-  <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
-  <arg name="paused" value="false"/>
-  <arg name="use_sim_time" value="true"/>
-  <arg name="gui" value="true"/>
-  <arg name="headless" value="false"/>
-  <arg name="debug" value="false"/>
-</include>
-
-<group ns="p0">
-  <include file="$(find nre_gazebo)/launch/p3at.launch">
-    <arg name="namespace" value="p0" />
-    <arg name="initX" value="90" />
-    <arg name="initY" value="20" />
-    <arg name="initYaw" value="0" />
+  <arg name="initX" default="90" />
+  <arg name="initY" default="20" />
+  <arg name="initZ" default="1" />
+  <arg name="initYaw" default="0" />
+  
+  <!-- Gazebo -->
+  <!--<arg name="world_name" default="worlds/empty.world"/>-->
+  <arg name="world_name" default="$(find nre_gazebo)/worlds/geonav_cavr.world"/>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
   </include>
-
-  <!-- Takes output from P3D Gazebo plugin to simulate Microstrain Nav. -->
-  <node pkg="nre_gazebo" type="p3d2nav.py" name="p3d2nav" output="screen">
-    <param name="gazebo_origin_lat" value="36.596" type="double" />
-    <param name="gazebo_origin_long" value="-121.878" type="double" />
-  </node>
- 
-  <!-- Converts Lat/Lon from Microstrain to local X/Y -->
-  <node pkg="geonav_transform" type="geonav_transform_node" name="geonav_transform_node" clear_params="true" output="screen">
-    <!-- Datum as latitude, longitude [decimal deg.], yaw [ENU, degrees] -->
-    <rosparam param="datum">[36.596, -121.878, 0.0]</rosparam>
-  </node>
-</group>
-
+  
+  <group ns="p0">
+    <include file="$(find nre_gazebo)/launch/p3at.launch">
+      <arg name="namespace" value="p0" />
+      <arg name="initX" value="$(arg initX)" />
+      <arg name="initY" value="$(arg initY)" />
+      <arg name="initZ" value="$(arg initZ)" />
+      <arg name="initYaw" value="$(arg initYaw)" />
+    </include>
+    
+    <!-- Takes output from P3D Gazebo plugin to simulate Microstrain Nav. -->
+    <node pkg="nre_gazebo" type="p3d2nav.py" name="p3d2nav" output="screen">
+      <param name="gazebo_origin_lat" value="36.596" type="double" />
+      <param name="gazebo_origin_long" value="-121.878" type="double" />
+    </node>
+    
+    <!-- Converts Lat/Lon from Microstrain to local X/Y -->
+    <node pkg="geonav_transform" type="geonav_transform_node" name="geonav_transform_node" clear_params="true" output="screen">
+      <!-- Datum as latitude, longitude [decimal deg.], yaw [ENU, degrees] -->
+      <rosparam param="datum">[36.596, -121.878, 0.0]</rosparam>
+    </node>
+  </group>
+  
 </launch>

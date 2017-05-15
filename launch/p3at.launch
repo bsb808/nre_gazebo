@@ -7,6 +7,7 @@
 <arg name="tfpre" default="$(arg namespace)" />
 <arg name="initX" default="0" />
 <arg name="initY" default="0" />
+<arg name="initZ" default="0" />
 <arg name="initYaw" default="0" />
 
 <!-- Put value on the parameter server in the group's namespace -->
@@ -18,10 +19,21 @@
 					 nsp:=$(arg namespace)
 					 tfpre:=$(arg tfpre)" />
 
-<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-x $(arg initX) -y $(arg initY) -Y $(arg initYaw) -unpause -param robot_description -urdf -model $(arg namespace)" />
+<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-x $(arg initX) -y $(arg initY) -z $(arg initZ) -Y $(arg initYaw) -unpause -param robot_description -urdf -model $(arg namespace)" />
 
 <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
 <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
+<!-- Takes output from P3D Gazebo plugin to simulate Microstrain Nav. -->
+<node pkg="nre_gazebo" type="p3d2nav.py" name="p3d2nav" output="screen">
+  <param name="gazebo_origin_lat" value="36.596" type="double" />
+  <param name="gazebo_origin_long" value="-121.878" type="double" />
+</node>
+
+<!-- Converts Lat/Lon from Microstrain to local X/Y -->
+<node pkg="geonav_transform" type="geonav_transform_node" name="geonav_transform_node" clear_params="true" output="screen">
+  <!-- Datum as latitude, longitude [decimal deg.], yaw [ENU, degrees] -->
+  <rosparam param="datum">[36.596, -121.878, 0.0]</rosparam>
+</node>
 
 </launch>
