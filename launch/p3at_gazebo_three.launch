@@ -11,6 +11,10 @@
   <arg name="initZ1" default="1" />
   <arg name="initYaw1" default="0" />
 
+  <arg name="initX2" default="85" />
+  <arg name="initY2" default="18" />
+  <arg name="initZ2" default="1" />
+  <arg name="initYaw2" default="0" />
 
   <!--<arg name="world_name" default="worlds/empty.world"/>-->
   <arg name="world_name" default="$(find nre_gazebo)/worlds/geonav_cavr.world"/>
@@ -42,6 +46,16 @@
       <arg name="initY" value="$(arg initY1)" />
       <arg name="initZ" value="$(arg initZ1)" />
       <arg name="initYaw" value="$(arg initYaw1)" />
+    </include>
+  </group>
+
+  <group ns="p2">
+    <include file="$(find nre_gazebo)/launch/p3at.launch">
+      <arg name="namespace" value="p2" />
+      <arg name="initX" value="$(arg initX2)" />
+      <arg name="initY" value="$(arg initY2)" />
+      <arg name="initZ" value="$(arg initZ2)" />
+      <arg name="initYaw" value="$(arg initYaw2)" />
     </include>
   </group>
   

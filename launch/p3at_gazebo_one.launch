@@ -26,18 +26,7 @@
       <arg name="initZ" value="$(arg initZ)" />
       <arg name="initYaw" value="$(arg initYaw)" />
     </include>
-    
-    <!-- Takes output from P3D Gazebo plugin to simulate Microstrain Nav. -->
-    <node pkg="nre_gazebo" type="p3d2nav.py" name="p3d2nav" output="screen">
-      <param name="gazebo_origin_lat" value="36.596" type="double" />
-      <param name="gazebo_origin_long" value="-121.878" type="double" />
-    </node>
-    
-    <!-- Converts Lat/Lon from Microstrain to local X/Y -->
-    <node pkg="geonav_transform" type="geonav_transform_node" name="geonav_transform_node" clear_params="true" output="screen">
-      <!-- Datum as latitude, longitude [decimal deg.], yaw [ENU, degrees] -->
-      <rosparam param="datum">[36.596, -121.878, 0.0]</rosparam>
-    </node>
+
   </group>
   
 </launch>

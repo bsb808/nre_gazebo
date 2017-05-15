@@ -92,7 +92,7 @@
       </link>
     </model>
 
-  <model name='WP1'>
+  <model name='WP2'>
       <pose>85 16 0.05 0 -0 0</pose>
       <static>true</static>
       <link name='link'>
