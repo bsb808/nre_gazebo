@@ -8,9 +8,9 @@
   
   <!-- Gazebo -->
   <!--<arg name="world_name" default="worlds/empty.world"/>-->
-  <arg name="world_name" default="$(find nre_gazebo)/worlds/geonav_cavr.world"/>
+  <arg name="world" default="geonav_cavr.world"/>
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(arg world_name)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+    <arg name="world_name" value="$(find nre_gazebo)/worlds/$(arg world)"/> <!-- world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
