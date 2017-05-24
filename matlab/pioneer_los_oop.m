@@ -31,6 +31,9 @@ leader.dist_threshold = 0.1;
 leader.set_waypoints([94,28; 83,17; 
     85,14; 97,26]);
 
+% Pass the guidance function to the object as a function handle
+leader.guidance_function = @pioneer_los;
+
 % Enable - this starts the publications
 leader.enabled = 1;
 

@@ -12,7 +12,10 @@ classdef pioneerguidanceclass < handle
        odomN
        geonavN
        statusN
-              
+       
+       % Function handle for guidance algorithm
+       guidance_function
+       
        % Robot State
        x_odom;
        y_odom;
@@ -59,6 +62,10 @@ classdef pioneerguidanceclass < handle
           obj.th_geonav = nan;
           obj.cnt_geonav = 0;
           obj.filter_status = nan;
+          
+          % The guidance function is a function handle.
+          % We'll initialize it with a dummy anonymous function
+          obj.guidance_function = @(x,y,th,xstart,ystart,xend,yend) deal(sqrt((xstart-xend)^2+(ystart-yend)^2),0,0);
           
           % Setup publishers 
           fprintf('Publishing Twist messages on <%s>\n',twist_topic);
@@ -190,11 +197,12 @@ classdef pioneerguidanceclass < handle
               y_start = obj.waypoints(obj.wpt_index,2);
               x_end = obj.waypoints(obj.wpt_index+1,1);
               y_end = obj.waypoints(obj.wpt_index+1,2);
-              [dist,linvel,angvel] = pioneer_los(x,y,th,x_start,y_start,x_end,y_end);
-              %disp(dist);
+              
+              % Call the guidance function handle
+              [dist,linvel,angvel] = obj.guidance_function(x,y,th,x_start,y_start,x_end,y_end);
+            
               if (dist < obj.dist_threshold)
                   obj.wpt_index = min(obj.wpt_index+1,size(obj.waypoints,1));
-                  %obj.publish_cmd_vel(0,0);
               else
                   obj.publish_cmd_vel(linvel,angvel);
               end

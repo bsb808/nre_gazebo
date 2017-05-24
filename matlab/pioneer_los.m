@@ -11,10 +11,10 @@ function [dist2end, linvel,angvel] = pioneer_los(x,y,th,xstart,ystart,xend,yend)
 
 
 % Control Parameters - tunable
-look_ahead_distance = 10; %1;
+look_ahead_distance = 1;
 maxvel = 1;  % Maximum linear velocity 
-Kang = 1;  %2;  % angular gain
-Klin = 0.03;  %0.5;  % linear gain
+Kang = 2;  % angular gain
+Klin = 0.5;  % linear gain
 
 % Slope of line
 m = 0;
@@ -80,9 +80,9 @@ angvel = Kang*hdgError;
 linvel = min(maxvel, Klin*dist2end);
 
 % Logic for sharp turns
-%if abs(hdgError) > 0.5
-%    linvel = 0;
-%end
+if abs(hdgError) > 0.5
+    linvel = 0;
+end
 
 % For debugging 
 msg = sprintf('LOS: dist2goal: %5.1f, dist2line: %5.2f, angle_tgt %5.1f, th=%5.2f, hdgError=%5.2f', ...
