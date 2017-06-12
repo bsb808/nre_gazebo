@@ -16,7 +16,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="los_sketch.svg">
+   sodipodi:docname="los_sketch.svg"
+   inkscape:export-filename="/home/bsb/catkin_ws/src/nre_gazebo/images/los_sketch.png"
+   inkscape:export-xdpi="100"
+   inkscape:export-ydpi="100">
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -220,7 +223,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
